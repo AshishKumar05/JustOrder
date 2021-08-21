@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btn_colorbackground">
+    <gradient
+
+        android:startColor="@color/orange"
+        android:endColor="@color/skiptext"
+        android:type="linear">
+    </gradient>
+    <corners android:radius="50dp"/>
+</shape>
