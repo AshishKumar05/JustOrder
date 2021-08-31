@@ -16,6 +16,8 @@ import com.example.justorder.data.restraurant.Restraurant
 import com.example.justorder.data.restraurant.RestraurantResponse
 import com.example.justorder.data.store.StoreItem
 import com.example.justorder.data.store.StoreResponse
+import com.example.justorder.roomdb.CartItem
+import com.example.justorder.roomdb.RoomViewModel
 import com.example.justorder.ui.Home
 import com.example.justorder.utils.Constants
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
@@ -24,7 +26,7 @@ import com.smarteist.autoimageslider.SliderView
 import retrofit2.Call
 import retrofit2.Response
 
-class RestraurantActivity : AppCompatActivity() {
+class RestraurantActivity : ItemAdapter.ItemClickListener,AppCompatActivity()  {
     private var layoutManager:RecyclerView.LayoutManager?=null
     lateinit var itemAdapter: ItemAdapter
     lateinit var name : TextView
@@ -60,7 +62,9 @@ class RestraurantActivity : AppCompatActivity() {
         sliderview.startAutoCycle()
 
         proceed.setOnClickListener {
-
+            var roomViewModel = RoomViewModel(application)
+            Log.e("ASHISH", "onCreate: "+roomViewModel.getAll() )
+            Toast.makeText(this, ""+roomViewModel.getAll(),Toast.LENGTH_LONG).show()
             var intent=Intent(this@RestraurantActivity, Home::class.java)
             intent.putExtra("CartFragment",true)
             overridePendingTransition(0, 0);
@@ -70,7 +74,7 @@ class RestraurantActivity : AppCompatActivity() {
         var recyclerView:RecyclerView=findViewById(R.id.itemlist)
         layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        itemAdapter = ItemAdapter()
+        itemAdapter = ItemAdapter(applicationContext, ArrayList<StoreItem>(),this)
         recyclerView.adapter=itemAdapter
         if(restraId!=null) {
             Log.e("CALL", "onCreate: "+restraId)
@@ -155,5 +159,20 @@ class RestraurantActivity : AppCompatActivity() {
     fun setRestraurantItemListData(restraurantItemList : ArrayList<StoreItem>) {
         itemAdapter.setData(restraurantItemList)
         itemAdapter.notifyDataSetChanged()
+    }
+
+    override fun add(cartItem: CartItem) {
+        var roomViewModel = RoomViewModel(application)
+        roomViewModel.insertItem(cartItem)
+    }
+
+    override fun update(cartItem: CartItem) {
+        var roomViewModel = RoomViewModel(application)
+        roomViewModel.insertItem(cartItem)
+    }
+
+    override fun delete(cartItem: CartItem) {
+        var roomViewModel = RoomViewModel(application)
+        roomViewModel.insertItem(cartItem)
     }
 }

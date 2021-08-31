@@ -80,8 +80,7 @@ class HomeFragment : Fragment() {
         layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         val recylerview : RecyclerView = root.findViewById(R.id.itemlist)
         recylerview.layoutManager = layoutManager
-        itemAdapter =
-            StoreItemAdapter()
+        itemAdapter = StoreItemAdapter()
         recylerview.adapter= itemAdapter
 
         setItemData()
