@@ -10,6 +10,7 @@ class RoomViewModel : AndroidViewModel {
     private lateinit var list: MutableLiveData<List<CartItem>>
     private lateinit var appDatabase : AppDatabase
 
+    val TAG="ROOMMODEL"
     constructor(application: Application):super(application){
         list = MutableLiveData()
         appDatabase = AppDatabase.getDbInstance(application.applicationContext)
@@ -25,12 +26,20 @@ class RoomViewModel : AndroidViewModel {
         return list
     }
     fun insertItem(cartItem: CartItem){
-       var itemFromDb = appDatabase.userDao().getItem(cartItem.id)
-        Log.e("ASHISHDB", "insertItem: " )
+        if(cartItem!=null){
+            Log.e(TAG, "insertItem: "+cartItem.toString() )
+        } else {
+            Log.e(TAG, "insertItem: NULLLLLLLLLL" )
+        }
+       var itemFromDb:CartItem = appDatabase.userDao().getItem(cartItem.id)
+        Log.e(TAG, "DATA already there"+itemFromDb )
         if (itemFromDb==null){
             appDatabase.userDao().insert(cartItem)
         } else{
+            Log.e(TAG, "Alredayinserted"+itemFromDb.toString())
+
             if(cartItem.orderquantity!=0){
+                Log.e(TAG, "UPDATE" )
                 update(cartItem)
             } else {
                 delete(cartItem)

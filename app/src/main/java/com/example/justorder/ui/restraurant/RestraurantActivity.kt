@@ -27,6 +27,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class RestraurantActivity : ItemAdapter.ItemClickListener,AppCompatActivity()  {
+    val TAG="RestraurantActivity"
     private var layoutManager:RecyclerView.LayoutManager?=null
     lateinit var itemAdapter: ItemAdapter
     lateinit var name : TextView
@@ -163,16 +164,19 @@ class RestraurantActivity : ItemAdapter.ItemClickListener,AppCompatActivity()  {
 
     override fun add(cartItem: CartItem) {
         var roomViewModel = RoomViewModel(application)
+        Log.e(TAG, "add: "+cartItem.copy() )
         roomViewModel.insertItem(cartItem)
     }
 
     override fun update(cartItem: CartItem) {
         var roomViewModel = RoomViewModel(application)
+        Log.e(TAG, "update: "+cartItem.copy() )
         roomViewModel.insertItem(cartItem)
     }
 
     override fun delete(cartItem: CartItem) {
         var roomViewModel = RoomViewModel(application)
+        Log.e(TAG, "delete: "+cartItem.copy() )
         roomViewModel.insertItem(cartItem)
     }
 }
