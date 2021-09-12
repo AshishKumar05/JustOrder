@@ -82,6 +82,9 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt)
 
 
+    //paytm integration
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.2'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

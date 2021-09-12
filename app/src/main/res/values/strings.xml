@@ -2,9 +2,11 @@
     <string name="app_name">Just Order</string>
     <string name="title_activity_home">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="title_search">Search</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
     <string name="title_myorder">My Order</string>
     <string name="title_cart">Cart</string>
+    <string name="titile_new_address">Add New Address</string>
+    <string name="title_save">SAVE &amp; PROCEED</string>
 </resources>

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.homefragments.dashboard.DashboardFragment">
+    tools:context=".ui.homefragments.profile.ProfileFragment">
 
     <TextView
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/text_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
