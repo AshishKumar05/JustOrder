@@ -83,7 +83,7 @@ dependencies {
 
 
     //paytm integration
-    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.2'
+  //  implementation 'com.paytm.appinvokesdk:appinvokesdk:1.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
