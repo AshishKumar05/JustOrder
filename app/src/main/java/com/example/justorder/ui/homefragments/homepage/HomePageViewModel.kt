@@ -25,5 +25,10 @@ class HomePageViewModel(application: Application) : AndroidViewModel(application
         return homePageItemRepository?.getRestraurants()
     }
 
+    fun getItems(): MutableLiveData<APIResponse<StoreResponse>>? {
+        Log.e("MediapostViewModel", "get_mediapost: ")
+        return homePageItemRepository?.getItems()
+    }
+
 
 }

@@ -34,10 +34,10 @@ class RetroInstance {
 
 
 
-    /*fun getAPIManager(): APIManager? {
+    fun getAPIManager(): APIManager? {
         if (retrofit == null) {
             retrofit = getMyRetrofit()
         }
         return retrofit!!.create(APIManager::class.java)
-    } */
+    }
 }

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class RestraurantResponse (
 
         @SerializedName("result")
-        var list: ArrayList<Restraurant>,
+        var list: List<Restraurant>,
 
         @SerializedName("status")
         var status: Int,

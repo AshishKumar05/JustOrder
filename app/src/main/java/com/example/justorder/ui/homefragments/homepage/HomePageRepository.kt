@@ -50,4 +50,37 @@ class HomePageRepository {
         })
         return mutableLiveData
     }
+
+    fun getItems(): MutableLiveData<APIResponse<StoreResponse>>? {
+        val apiResponse: APIResponse<StoreResponse> = APIResponse()
+        val mutableLiveData: MutableLiveData<APIResponse<StoreResponse>> = MutableLiveData<APIResponse<StoreResponse>>()
+        val get_itemlist: Call<StoreResponse> = apiManager.getItemList()
+        get_itemlist.enqueue(object : Callback<StoreResponse> {
+            override fun onResponse(call: Call<StoreResponse>, response: Response<StoreResponse>) {
+                Log.d("MediapostRepository", "onResponse: ")
+                if (!response.isSuccessful()) {
+                    Log.d("MediapostRepository", "onResponseFail: ")
+                    try {
+                        apiResponse.setError(true)
+                        apiResponse.setErrorMessage(response.errorBody()!!.string())
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    Log.d("MediapostRepository", "onResponseSuccess: Ashish")
+                    //    response.body()?.let { apiResponse.setResponse(it) }
+                    apiResponse.setResponse(response.body()!!)
+                }
+                mutableLiveData.setValue(apiResponse)
+            }
+
+            override fun onFailure(call: Call<StoreResponse>, t: Throwable) {
+                Log.d("MediapostRepository", "onFailures: ")
+                apiResponse.setError(true)
+                apiResponse.setErrorMessage(t.message)
+                mutableLiveData.setValue(apiResponse)
+            }
+        })
+        return mutableLiveData
+    }
 }

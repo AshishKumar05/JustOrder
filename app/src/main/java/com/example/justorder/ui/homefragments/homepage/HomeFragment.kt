@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -46,7 +47,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       // homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomePageViewModel::class.java)
+        homeViewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val restraLabel: TextView = root.findViewById(R.id.restraurentlabel)
         restraLabel.setOnClickListener{
@@ -68,14 +69,6 @@ class HomeFragment : Fragment() {
         sliderview.setIndicatorAnimation(IndicatorAnimationType.WORM)
         sliderview.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION)
         sliderview.startAutoCycle()
-//        homeViewModel.get_itemList()?.observe(requireActivity(), Observer { response ->
-//            if(response.isError()){
-//
-//            } else{
-//                var storeResponse : StoreResponse? = response.getResponse()
-//                listData= storeResponse?.list!!
-//            }
-//        })
 //        val profile : ImageView = root.findViewById(R.id.image)
         layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         val recylerview : RecyclerView = root.findViewById(R.id.itemlist)
@@ -83,9 +76,18 @@ class HomeFragment : Fragment() {
         itemAdapter = StoreItemAdapter()
         recylerview.adapter= itemAdapter
 
-        setItemData()
+      //  setItemData()
 
+        homeViewModel.getItems()?.observe(requireActivity(), { response ->
+            if (response.isError()) {
 
+            } else {
+                var itemResponse: StoreResponse? = response.getResponse()
+                itemResponse?.list?.let { itemAdapter.setListData(it) }
+                itemAdapter.notifyDataSetChanged()
+                Log.e("ASHISH", "onCreateView: Items" )
+            }
+        })
 
 
 
@@ -103,8 +105,18 @@ class HomeFragment : Fragment() {
                 }
             })
         recyclerViewRestraurant.adapter = adapterRestraurant
+        homeViewModel.getRestraurants()?.observe(requireActivity(), Observer { response ->
+            if(response.isError()){
 
-        setRestraurantData()
+            } else{
+                var storeResponse : RestraurantResponse? = response.getResponse()
+                adapterRestraurant.setRestraurantData(storeResponse?.list as ArrayList<Restraurant>)
+                adapterRestraurant.notifyDataSetChanged()
+                Log.e("ASHISH", "onCreateView: Restraurent" )
+            }
+        })
+
+     //   setRestraurantData()
    //     getRestraurantList()
         return root
     }
@@ -129,24 +141,24 @@ class HomeFragment : Fragment() {
         })
     }
 
-    fun setRestraurantData(){
-        val retroInstance = RetroInstance().getMyRetrofit().create(APIManager::class.java)
-        val call = retroInstance.getRestraurants()
-        call.enqueue(object : retrofit2.Callback<RestraurantResponse>{
-            override fun onResponse(call: Call<RestraurantResponse>, response: Response<RestraurantResponse>) {
-                if(response.isSuccessful){
-                    adapterRestraurant.setRestraurantData(response.body()?.list!!)
-                    adapterRestraurant.notifyDataSetChanged()
-                }
-            }
-
-            override fun onFailure(call: Call<RestraurantResponse>, t: Throwable) {
-                Toast.makeText(activity,"Something went wrong",Toast.LENGTH_LONG).show()
-                Log.e("ASHISH", "onFailure: " )
-                Log.e("ASHISH", "onFailure: "+t.stackTrace )
-            }
-        })
-    }
+//    fun setRestraurantData(){
+//        val retroInstance = RetroInstance().getMyRetrofit().create(APIManager::class.java)
+//        val call = retroInstance.getRestraurants()
+//        call.enqueue(object : retrofit2.Callback<RestraurantResponse>{
+//            override fun onResponse(call: Call<RestraurantResponse>, response: Response<RestraurantResponse>) {
+//                if(response.isSuccessful){
+//                    adapterRestraurant.setRestraurantData(response.body()?.list!!)
+//                    adapterRestraurant.notifyDataSetChanged()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<RestraurantResponse>, t: Throwable) {
+//                Toast.makeText(activity,"Something went wrong",Toast.LENGTH_LONG).show()
+//                Log.e("ASHISH", "onFailure: " )
+//                Log.e("ASHISH", "onFailure: "+t.stackTrace )
+//            }
+//        })
+//    }
 
 //    fun getRestraurantList(){
 //         homeViewModel.getRestraurants()
